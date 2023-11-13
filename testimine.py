@@ -1,3 +1,0 @@
-#tere
-#vana
-#kere
