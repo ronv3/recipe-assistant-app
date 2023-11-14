@@ -2,6 +2,8 @@
 #vana
 #kere
 
+#Funktsioon "loe_toidud_failist"
+#Võtab argumendiks failinime ("toit.txt"), loeb faili läbi ja annab tagasi sõnastiku, kus on elemendid vormis ('Toiduaine : Kaal grammides (või maht ml) numbrina))
 def loe_toidud_failist(failinimi):
     t_fail = open(failinimi, encoding = "utf-8")
     toidud = []
@@ -15,6 +17,8 @@ def loe_toidud_failist(failinimi):
         td[aine] = int(kogus)
     return td
 
+#Funktsioon "loe_retsept"
+#Sarnane eelmisega, loeb retsepti faili läbi ja tagastab sõnastiku, mis üles ehitatud samamoodi nagu eelmises funktsioonis (retsepti jaoks vajalikud toiduained). Tagastab lisaks ka retsepti enda nime.
 def loe_retsept(failinimi):
     r_fail = open(failinimi, encoding = "utf-8")
     t_ained = []
@@ -31,17 +35,23 @@ def loe_retsept(failinimi):
         td[aine] = int(kogus)
     return td, recnim
 
+#Funktsioon "võrdle"
+#Võtab kahe eelmise funktsiooni väljundid ja võrdleb neid nii, et välja selgitada, kas mingit konkreetset retsepti saab valmistada antud toiduainetega. Kui saab, tagastab retsepi nime. Kui ei, siis 0.
 def võrdle(d1, d2):
-    võimalikud_retseptid = []
+    võimalik_retsept = []
     ained = d2[0]
     recc = ''.join(d2[1])
     if all(aine in d1 and d1[aine] >= arv for aine, arv in ained.items()):
-        võimalikud_retseptid.append(recc)
-        return võimalikud_retseptid
+        võimalik_retsept.append(recc)
+        return võimalik_retsept
     else:
         return 0
-    
-def lisa_retsepti_andmebaasi(a):
+
+#Funktsioon "lisa_retsepti_andmebaasi"
+#See funktsioon võimaldab lisada uusi retsepte andmebaasi.
+#Meil on olemas 2 sorti retseptifaile: esimene on tavaline fail, mis sisaldab kindlat retsepti. Teine on fail, kus on kirjas kõik retseptifailide failinimed (retsepti_andmebaas.txt).
+#See funktsioon teeb vastavalt sisendile täiesti uue retseptifaili ja lisab ka antud failinime andmebaasi.
+def lisa_retsepti_andmebaasi():
     sfn = input("Sisesta uue faili nimi: (r_roa_nimi.txt formaadis): ")
     recf = open(sfn, 'w', encoding = 'utf-8')
     nimi = input("Sisesta roa nimi: ")
@@ -57,8 +67,10 @@ def lisa_retsepti_andmebaasi(a):
     ab = open("retsepti_andmebaas.txt", 'a', encoding = 'utf-8')
     ab.write(f'{sfn}\n')
     ab.close()
-    print("Retsept edukalt andmebaasi lisatud!")
+    return "Retsept edukalt andmebaasi lisatud!"
     
+#Funktsioon "retseptiloendur"
+#See on purakas. Ta kasutab 3 esimest funktsiooni, et välja selgitada, milliseid retsepte saad valmistada toidufaili põhjal. Tagastab nende retseptide nimed.
 def retseptiloendur():
     alltoit = loe_toidud_failist("toit.txt")
     v_rec = []
@@ -78,6 +90,9 @@ def retseptiloendur():
     end = ("...ja ongi kõik.")
     return end
 
+#Funktsioon "toiduaine_muutja"
+#Nagu nimi ütleb. Selle funktsiooniga saad muuta toidufaili sisu.
+#Vali, kas lisad toiduaineid või eemaldad neid. Pead vaid sisestama ained ja fail lihtsalt muutub... on ikka tark funktsioon nh
 def toiduaine_muutja():
     nk = loe_toidud_failist("toit.txt")
     dicti = {}
