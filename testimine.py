@@ -6,8 +6,9 @@ def loe_toidud_failist(failinimi):
     t_fail = open(failinimi, encoding = "utf-8")
     toidud = []
     for rida in t_fail:
-        rida = rida.strip().split()
-        toidud.append(rida)
+        if rida != '':
+            rida = rida.strip().split()
+            toidud.append(rida)
     td = {}
     for toit in toidud:
         aine, kogus = toit[0].split(",")
@@ -76,5 +77,41 @@ def retseptiloendur():
         print(''.join(x))
     end = ("...ja ongi kõik.")
     return end
-        
-print(retseptiloendur())
+
+def toiduaine_muutja():
+    nk = loe_toidud_failist("toit.txt")
+    dicti = {}
+    dicti2 = {}
+    s1 = input("Kas soovid toiduaineid lisada(+) või eemaldada(-)? ")
+    if s1 == '+':
+        l1 = input("Lisa toiduained. (Aine,Kaal formaadis): ")
+        l1 = l1.split()
+        dicti = {nimi.split(',')[0]: int(nimi.split(',')[1]) for nimi in l1}
+        for aine, kogus in dicti.items():
+            if aine in nk:
+                nk[aine] += dicti[aine]
+            else:
+                nk[aine] = kogus
+        lis = list(nk.items())
+        unk = [f'{x},{y}' for x, y in lis]
+        tf = open('toit.txt', 'w', encoding = 'utf-8')
+        for toiduaine in unk:
+            tf.write(f'{toiduaine}\n')
+        tf.close()
+        return "Toiduainete nimekiri uuendatud!"
+    elif s1 == '-':
+        l2 = input("Eemalda toiduaineid. (Aine,Kaal formaadis)\nKui toiduainet on veel alles, kuid vähem, sisesta, kui palju kadus.\nKui toiduaine on täiesti otsas, pane väärtuseks 0\n")
+        l2 = l2.split()
+        dicti2 = {nimi.split(',')[0]: int(nimi.split(',')[1]) for nimi in l2}
+        for aine2, kogus2 in dicti2.items():
+            if dicti2[aine2] != 0:
+                nk[aine2] -= dicti2[aine2]
+            else:
+                del nk[aine2]
+        lis2 = list(nk.items())
+        unk2 = [f'{m},{n}' for m, n in lis2]
+        tf = open('toit.txt', 'w', encoding = 'utf-8')
+        for toiduaine in unk2:
+            tf.write(f'{toiduaine}\n')
+        tf.close()
+        return "Toiduainete nimekiri uuendatud!"
