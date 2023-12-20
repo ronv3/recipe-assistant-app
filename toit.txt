@@ -1,6 +1,0 @@
-Hakkliha,600
-Sibul,100
-Sool,100
-Pipar,2015
-Pekk,80
-Kalev,818

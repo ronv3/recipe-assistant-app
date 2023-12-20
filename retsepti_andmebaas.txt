@@ -1,3 +1,0 @@
-r_kotletid.txt
-r_caesari_salat.txt
-r_peekon.txt
