@@ -16,3 +16,4 @@ What could be better?
 
     There could be a GUI integrated.
     Spoonacular API offers loads of features, such as provided image for the recipe, max carbs, gluten - free or vegan recipes etc.
+    Could be in estonian.
